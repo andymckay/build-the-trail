@@ -1,5 +1,5 @@
 [input]
-base_directory = "/Users/a/c/buildthetrail/output"
+base_directory = "/Users/a/c/build-the-trail-two/output"
 html_selector = "main"
 
 [[input.files]]
