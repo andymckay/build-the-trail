@@ -1,6 +1,6 @@
 AUTHOR = 'Andy McKay'
 SITENAME = 'Build the Trail'
-SITEURL = 'http://localhost:8000'
+SITEURL = 'https://andymckay.github.io/build-the-trail/'
 
 
 PATH = 'content'
