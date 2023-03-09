@@ -1,4 +1,4 @@
-Title: About Build the Trail
+Title: It's time to complete the Spirit Trail
 Date: 2022-03-09
 Summary: About this site
 

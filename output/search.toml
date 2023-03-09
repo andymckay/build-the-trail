@@ -3,6 +3,6 @@ base_directory = "/Users/a/c/build-the-trail/output"
 html_selector = "main"
 
 [[input.files]]
-path = "about-build-the-trail.html"
-url = "/about-build-the-trail.html"
-title = "About Build the Trail"
+path = "its-time-to-complete-the-spirit-trail.html"
+url = "/its-time-to-complete-the-spirit-trail.html"
+title = "It's time to complete the Spirit Trail"
