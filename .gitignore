@@ -1,0 +1,5 @@
+staging/*
+themes/Papyrus/node_modules/*
+pelican-plugins/*
+devserver/*
+.DS_Store

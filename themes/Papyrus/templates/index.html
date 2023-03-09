@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+  <link rel="stylesheet" media="all" href="{{ SITEURL }}/theme/css/index.css" />
+{% endblock %}
+
+{% block content %}
+
+{% block content_title %}
+{% if not category and not tag %}
+<div class="my-12 md:my-12 text-zinc-800 dark:text-zinc-300">
+  {%if SUBTEXT %}
+  <div class="row">
+      <div class="max-w-7xl">
+      <span class="text-zinc-500 dark:text-zinc-400">{{ SUBTEXT }}</span>
+      </div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}
+
+<div class="py-1">
+  <ul>
+    {% for article in articles_page.object_list %}
+      <li class="bg-white dark:bg-zinc-800 p-4 md:p-6 rounded-lg">
+        <header>
+          <h1 class="font-semibold text-3xl my-2">{{article.title}}</h1>
+          <div class="my-2 text-zinc-800 text-zinc-800 dark:text-zinc-400">
+            {{ article.summary }}
+          </div>
+            <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">
+              <div class="flex text-xs text-zinc-800 dark:text-zinc-400">
+                <time>{{ article.date|strftime('%B %d, %Y') }}</time>
+                <div>
+                  {% if article.readtime %}
+                  <span>&nbsp;·&nbsp;{{ article.readtime }} min read</span>
+                  {% endif %}
+                </div>
+                <div>
+                  {% if article.author != '' %}
+                  <span>&nbsp;·&nbsp;{{ article.author }}</span>
+                  {% endif %}
+                </div>
+                &nbsp;·&nbsp;Permalink
+              </div>
+            </a>
+          {% if article.modified %}
+          <div class="flex text-xs text-zinc-800 dark:text-zinc-400">
+            <span>Last updated: {{ article.modified|strftime('%B %d, %Y') }}</span>
+          </div>
+          {% endif %}
+        </header>
+        <div class="max-w-7xl container mx-auto my-8 text-zinc-800 dark:text-zinc-300  
+                    prose lg:max-w-none prose-headings:text-zinc-800 prose-headings:dark:text-zinc-300 
+                    prose-h1:text-3xl lg:prose-h1:text-3xl prose-headings:font-semibold 
+                    prose-pre:bg-zinc-200 prose-pre:text-zinc-800
+                    dark:prose-pre:bg-zinc-800 dark:prose-pre:text-zinc-200
+                    prose-blockquote:text-zinc-800
+                    dark:prose-blockquote:text-zinc-200
+                    prose-a:text-gray-500
+                    dark:prose-a:text-gray-400
+                    dark:prose-strong:text-zinc-200 
+                    dark:prose-code:text-zinc-200
+                    dark:prose-code:bg-zinc-800
+                    prose-code:bg-zinc-200
+                    prose-code:font-light
+                    prose-img:rounded-md
+                    ">
+          {{ article.content }}
+          <!-- <div class="aspect-w-16 aspect-h-9 mx-auto"></div> CSS placeholder -->
+        </div>
+      </li>
+    </a>
+    {% endfor %}
+  </ul>
+</div>
+{% if articles_page.has_other_pages() %}
+  {% include 'pagination.html' %}
+{% endif %}
+
+{% if SOCIAL or FEED_ALL_ATOM or FEED_ALL_RSS %}
+<ul class="flex px-2 space-x-4 text-lg mt-3">
+  {% for name, link in SOCIAL %}
+  <li><a href="{{ link }}"><i class="fab fa-{{ name }} fa-lg" aria-hidden="true" target="_blank"
+        rel="noopener noreferrer" title="{{ name }}"></i></a></li>
+  {% endfor %}
+  {% if FEED_ALL_ATOM %}
+  <li><a href="{{ FEED_DOMAIN }}/
+                      {% if FEED_ALL_ATOM_URL %}{{ FEED_ALL_ATOM_URL }}{% else %}{{ FEED_ALL_ATOM }}{% endif %}"
+      type="application/atom+xml" title="{{ FEED_ALL_ATOM }}" rel="alternate"><i class="fa fa-rss fa-lg"
+        aria-hidden="true"></i></a>
+  </li>
+  {% endif %}
+  {% if FEED_ALL_RSS %}
+  <li><a href="{{ FEED_DOMAIN }}/
+                      {% if FEED_ALL_RSS_URL %}{{ FEED_ALL_RSS_URL }}{% else %}{{ FEED_ALL_RSS }}{% endif %}"
+      type="application/rss+xml" title="{{ FEED_ALL_RSS }}" rel="alternate"><i class="fa fa-rss fa-lg"
+        aria-hidden="true"></i></a>
+  </li>
+  {% endif %}
+</ul>
+{% endif %}
+
+{% endblock content %}

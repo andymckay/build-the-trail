@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="{% block html_lang %}{{ DEFAULT_LANG }}{% endblock html_lang %}">
+
+<head>
+    {% block head %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Pelican" />
+    <meta property="og:image:width" content="600" />
+    {% block og_image %}
+        <meta property="og:image" content="/images/background.png" />
+    {% endblock %}
+    <title>{% block title %} {{ SITENAME }} {% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda|Raleway" />
+    <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/pygment.css" />
+    <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/stork.css">
+    <link rel="stylesheet" media="screen and (prefers-color-scheme: dark)"
+        href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/stork-dark.css">
+    {% if FEED_ALL_ATOM %}
+    <link
+        href="{{ FEED_DOMAIN }}/{% if FEED_ALL_ATOM_URL %}{{ FEED_ALL_ATOM_URL }}{% else %}{{ FEED_ALL_ATOM }}{% endif %}"
+        type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom Feed" />
+    {% endif %}
+    {% if FEED_ALL_RSS %}
+    <link
+        href="{{ FEED_DOMAIN }}/{% if FEED_ALL_RSS_URL %}{{ FEED_ALL_RSS_URL }}{% else %}{{ FEED_ALL_RSS }}{% endif %}"
+        type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
+    {% endif %}
+    {% block extra_head %}{% endblock extra_head %}
+    {% endblock head %}
+    {% for rel, url in FAVICON_URLS %}
+        <link rel="{{ rel }}" href="{{ SITEURL }}/{{ url }}" />
+        {% if (url.endswith(".svg")) %}
+            <link rel="mask-icon" href="{{ SITEURL }}/{{ url }}" color="#000000"/>
+        {% endif %}
+    {% endfor %}
+
+    <script src="{{ SITE_URL }}/{{ THEME_STATIC_DIR }}/js/site.js">
+    </script>
+</head>
+
+<body class="min-h-screen flex flex-col max-w-7xl lg:max-w-none text-zinc-800 bg-neutral-100 
+    dark:bg-neutral-900 dark:text-zinc-300 container mx-auto justify-center ">
+    <nav class="sm:flex sm:justify-between xl:ml-32 pl-4 items-center">
+        <div class="flex pt-4">
+            <h1 class="font-semibold text-3xl">
+                <a href="{{ SITEURL }}/">{{ SITENAME }}</a></h1>
+        </div>
+        <ul class="flex flex-wrap lg:mr-24 md:pt-0">
+            {% if DISPLAY_PAGES_ON_MENU %}
+            {% for p in pages %}
+            <li class="mr-4 pt-6"><a {% if p==page %} class="border-b-2 border-zinc-800 dark:border-zinc-300"
+                    {% endif %} href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
+            {% endfor %}
+            {% endif %}
+            <li class="mr-4 pt-6"><a {% if current=="archive" %} class="border-b-2 border-zinc-800 dark:border-zinc-300"
+                    {% endif %} href="{{ SITEURL }}/archives.html">Archive</a></li>
+            <li class="mr-4 pt-6"><a {% if current=="search" %} class="border-b-2 border-zinc-800 dark:border-zinc-300"
+                    {% endif %} href="{{ SITEURL }}/search.html">Search</a></li>
+            <li class="mr-4 pt-6" id="theme-toggle">
+                <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                        fill-rule="evenodd" clip-rule="evenodd"></path>
+                </svg>
+            </li>
+        </ul>
+    </nav>
+    {% if DISPLAY_SUBSCRIBE %}
+    <div class="flex-grow md:max-w-screen-md md:mx-auto md:w-3/4 px-4 mt-3" id="subscribe" style="display: none">
+        <div class="bg-white dark:bg-zinc-800 p-4 md:p-6 mb-4 rounded-lg">
+        <p class="text-zinc-500 dark:text-zinc-400">Want to get Beyond Cars in your inbox? Then sign up for free 👇 and unsubscribe at any time. You can also get us on <a href="https://hachyderm.io/@beyondcars" class="underline">Mastodon</a> or <a href="#" class="underline" id="subscribe-close">just close this and carry on</a>.</p>
+        <p>
+            <form class="mt-3">
+                <input class="font-semibold h-10 w-full border-2 border-zinc-500  bg-zinc-100 dark:bg-zinc-800 placeholder-zinc-400 dark:placeholder-zinc-300 focus:border-zinc-500 focus:outline-none rounded-lg pl-4" type="email" name="email" placeholder="Your email address" />
+                <button type="submit" class="bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3">Subscribe</button>
+            </form>
+        </p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="pt-4">
+        <img src="{{ static }}/images/spirit-trail-bw.jpg" width="100%" />
+    </div>
+
+    <div class="flex-grow md:max-w-screen-md md:mx-auto md:w-3/4 px-4">
+        <div class="text-zinc-800 dark:text-zinc-300 mt-12 pb-3 md:mt-16"></nav>
+        {% block content %} {% endblock %}
+    </div>
+
+    <footer class="flex w-full justify-center mt-10 mb-6 text-zinc-500 dark:text-zinc-400">
+        <div class="px-4">
+            <a href="mailto:andy@mckay.pub">Contact</a>
+        </div>
+    </footer>
+
+    {% include 'analytics.html' %}
+
+    {% if current == "search" %}
+    <script src="https://files.stork-search.net/releases/v1.4.2/stork.js"></script>
+    <script>
+        stork.register("sitesearch", "{{ SITEURL }}/search-index.st")
+    </script>
+    {% endif %}
+</body>
+
+</html>

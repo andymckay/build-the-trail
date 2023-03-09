@@ -1,0 +1,8 @@
+[input]
+base_directory = "/Users/a/c/buildthetrail/output"
+html_selector = "main"
+
+[[input.files]]
+path = "about-build-the-trail.html"
+url = "/about-build-the-trail.html"
+title = "About Build the Trail"
