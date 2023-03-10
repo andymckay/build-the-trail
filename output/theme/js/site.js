@@ -42,7 +42,53 @@ function setupToggleTheme() {
     });
 }
 
+function showSubscribe(subscribe) {
+    if (localStorage.getItem('subscribe') === 'true') {
+        subscribe.style.display = 'none';
+    } else {
+        subscribe.style.display = 'block';
+    }
+}
+
+function setupSubscribe(subscribe) {
+    document.getElementById('subscribe-show').addEventListener('click', function () {
+        subscribe.style.display = 'block';
+        localStorage.setItem('subscribe', '')
+    });
+    document.getElementById('subscribe-close').addEventListener('click', function () {
+        subscribe.style.display = 'none';
+        localStorage.setItem('subscribe', 'true');
+    });
+    let form = subscribe.querySelector('form');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        let url = 'https://notifications.clearwind.ca/rss/subscribe/0d72687a-b7fd-4b84-84f9-d09b5b20bd33'
+        let formData = new FormData();
+        formData.append('email', form.querySelector('input').value);
+        let options = {
+            method: 'POST',
+            mode: 'cors',
+            body: formData,
+        }
+        fetch(url, options).then((response) => {
+            console.log(response.ok);
+            if (!response.ok) {
+                form.querySelector('button').textContent = '😢 Something went wrong. Try again?';
+            }
+            else {
+                form.querySelector('button').textContent = '✅ Done, thank you.';
+                window.setTimeout(function () {
+                    document.getElementById('subscribe-close').click();
+                }, 2000);
+            }
+        })
+    });
+
+}
 
 window.addEventListener("load", (event) => {
     setupToggleTheme();
+    let subscribe = document.getElementById('subscribe')
+    setupSubscribe(subscribe)
+    showSubscribe(subscribe);
 });
