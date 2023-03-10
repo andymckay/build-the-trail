@@ -47,8 +47,3 @@ html {
   .prose :where(code):not(:where([class~="not-prose"] *))::after {
     content: "";
   }
-
-h1 {
-    font-family: Raleway, sans-serif;
-    font-weight: 400;
-}
